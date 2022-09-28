@@ -25,7 +25,7 @@ public class TerminalConsole implements Runnable, CommandSender {
     }
 
     public void start() {
-        if(this.thread == null || !this.thread.isAlive()) {
+        if (this.thread == null || !this.thread.isAlive()) {
             this.thread = new Thread(this);
             this.thread.setName("servermanager-console");
             this.thread.start();
@@ -37,7 +37,7 @@ public class TerminalConsole implements Runnable, CommandSender {
     }
 
     public Thread.State getStatus() {
-        if(this.thread != null) {
+        if (this.thread != null) {
             return this.thread.getState();
         } else {
             return null;

@@ -3,11 +3,9 @@ package net.jandie1505.servermanager;
 import net.jandie1505.servermanager.console.CommandHandler;
 import net.jandie1505.servermanager.console.TerminalConsole;
 
-import java.io.IOException;
-
 public class ServerManager {
     private Thread managerThread;
-    private CommandHandler commandHandler;
+    private final CommandHandler commandHandler;
     private final TerminalConsole terminalConsole;
 
     public ServerManager() {
