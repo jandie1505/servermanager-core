@@ -1,14 +1,24 @@
 package net.jandie1505.servermanager;
 
+import net.jandie1505.servermanager.console.CommandHandler;
+import net.jandie1505.servermanager.console.TerminalConsole;
+
 import java.io.IOException;
 
 public class ServerManager {
     private Thread managerThread;
-    private final Console console;
+    private CommandHandler commandHandler;
+    private final TerminalConsole terminalConsole;
 
     public ServerManager() throws IOException {
-        this.console = new Console(this);
-        this.console.start();
+        this.commandHandler = new CommandHandler(this);
+
+        this.terminalConsole = new TerminalConsole(this);
+        this.terminalConsole.start();
+    }
+
+    public CommandHandler getCommandHandler() {
+        return this.commandHandler;
     }
 
     public static ServerManager instance;

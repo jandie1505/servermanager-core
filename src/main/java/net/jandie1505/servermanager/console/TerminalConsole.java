@@ -1,17 +1,19 @@
-package net.jandie1505.servermanager;
+package net.jandie1505.servermanager.console;
 
+import net.jandie1505.servermanager.ServerManager;
+import net.jandie1505.servermanager.console.sender.CommandSender;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Console implements Runnable {
+public class TerminalConsole implements Runnable, CommandSender {
     private final ServerManager serverManager;
     private final LineReader lineReader;
     private Thread thread;
 
-    public Console(ServerManager serverManager) {
+    public TerminalConsole(ServerManager serverManager) {
         this.serverManager = serverManager;
         this.lineReader = LineReaderBuilder.builder().build();
     }
@@ -19,7 +21,7 @@ public class Console implements Runnable {
     @Override
     public void run() {
         while (!Thread.currentThread().isInterrupted() && Thread.currentThread() == this.thread) {
-            this.lineReader.readLine("console@servermanager# ");
+            this.serverManager.getCommandHandler().executeCommand(this, this.lineReader.readLine("console@servermanager# ").split(" "));
         }
     }
 
@@ -48,5 +50,15 @@ public class Console implements Runnable {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
 
         this.lineReader.printAbove("[" + dateTimeFormatter.format(localDateTime) + "] " + out);
+    }
+
+    @Override
+    public void respond(String out) {
+        this.print(out);
+    }
+
+    @Override
+    public int getPermissionLevel() {
+        return Integer.MAX_VALUE;
     }
 }
