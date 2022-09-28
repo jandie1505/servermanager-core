@@ -10,11 +10,17 @@ public class ServerManager {
     private CommandHandler commandHandler;
     private final TerminalConsole terminalConsole;
 
-    public ServerManager() throws IOException {
+    public ServerManager() {
         this.commandHandler = new CommandHandler(this);
 
         this.terminalConsole = new TerminalConsole(this);
         this.terminalConsole.start();
+    }
+
+    public void shutdown() {
+        this.terminalConsole.stop();
+        //this.managerThread.interrupt();
+        this.terminalConsole.print("Shutdown finished");
     }
 
     public CommandHandler getCommandHandler() {
@@ -23,7 +29,7 @@ public class ServerManager {
 
     public static ServerManager instance;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         instance = new ServerManager();
     }
 }

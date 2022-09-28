@@ -1,7 +1,6 @@
 package net.jandie1505.servermanager.console;
 
 import net.jandie1505.servermanager.ServerManager;
-import net.jandie1505.servermanager.console.sender.CommandSender;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 

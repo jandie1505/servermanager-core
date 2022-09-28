@@ -1,4 +1,4 @@
-package net.jandie1505.servermanager.console.sender;
+package net.jandie1505.servermanager.console;
 
 import net.jandie1505.consolecommandapi.utilities.permissionlevels.CommandAPIPermissionLevelCommandSender;
 
