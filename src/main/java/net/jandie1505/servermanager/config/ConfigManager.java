@@ -22,8 +22,8 @@ public class ConfigManager {
         if(overrideConfigString != null) {
             try {
                 overrideConfig = new JSONObject(overrideConfigString);
-            } catch (JSONException e) {
-                this.serverManager.getTerminalConsole().print("Cannot load overrideConfig start argument (Content corrupt). Config value priority: overrideConfig start argument > config file > default values");
+            } catch (JSONException ignored) {
+                // CANNOT OUTPUT AT THIS TIME
             }
         }
 
@@ -53,10 +53,8 @@ public class ConfigManager {
             String out = sb.toString();
 
             configFile = new JSONObject(out);
-        } catch (IOException e) {
-            this.serverManager.getTerminalConsole().print("Cannot load config file (No file access). Config value priority: overrideConfig start argument > config file > default values");
-        } catch (JSONException e) {
-            this.serverManager.getTerminalConsole().print("Cannot load config file (Content corrupt). Config value priority: overrideConfig start argument > config file > default values");
+        } catch (IOException | JSONException ignored) {
+            // CANNOT OUTPUT AT THIS TIME
         }
 
         JSONObject internalConfig = this.getDefaultValues();
@@ -71,9 +69,7 @@ public class ConfigManager {
             internalConfig.put(key, overrideConfig.get(key));
         }
 
-        this.config = new JSONObject(internalConfig);
-
-        this.serverManager.getTerminalConsole().print("Config loaded successfully");
+        this.config = new JSONObject(internalConfig.toString());
     }
 
     /**
@@ -81,7 +77,7 @@ public class ConfigManager {
      * @return JSONObject
      */
     public JSONObject getConfig() {
-        return new JSONObject(this.config);
+        return new JSONObject(this.config.toString());
     }
 
     /**

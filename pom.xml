@@ -30,7 +30,7 @@
         <dependency>
             <groupId>com.github.jandie1505</groupId>
             <artifactId>ConsoleCommandAPI</artifactId>
-            <version>0.1</version>
+            <version>v0.1.2</version>
         </dependency>
         <dependency>
             <groupId>org.json</groupId>

@@ -28,6 +28,10 @@ public class ServerManager {
         this.terminalConsole.print("Shutdown finished");
     }
 
+    public ConfigManager getConfigManager() {
+        return this.configManager;
+    }
+
     public CommandHandler getCommandHandler() {
         return this.commandHandler;
     }
