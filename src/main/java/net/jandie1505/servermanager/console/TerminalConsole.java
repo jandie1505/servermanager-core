@@ -45,6 +45,10 @@ public class TerminalConsole implements Runnable, CommandSender {
     }
 
     public void print(String out) {
+        this.lineReader.printAbove(out);
+    }
+
+    public void printLog(String out) {
         LocalDateTime localDateTime = LocalDateTime.now();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
 

@@ -21,7 +21,10 @@ public class CommandHandler {
                 .executesNoPermission(DefaultCommandExecutors.noPermissionExecutor())
                 .setPermissionRequest(CommandAPIPermissionRequest.requirePermissionLevel(1))
                 .build();
+    }
 
+    public void setupSystemCommands() {
+        // SHUTDOWN COMMAND
         this.commandHandler.addCommand("shutdown",
                 new CommandAPICommandBuilder()
                         .executes(result -> {
@@ -33,6 +36,7 @@ public class CommandHandler {
                         .build()
         );
 
+        // HELP COMMAND
         this.commandHandler.addCommand("help",
                 new CommandAPICommandBuilder()
                         .executes(result -> {
