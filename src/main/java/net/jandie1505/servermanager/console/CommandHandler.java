@@ -44,6 +44,7 @@ public class CommandHandler {
                         .build()
         );
 
+        // CONFIG COMMAND
         this.commandHandler.addCommand("config",
                 new CommandAPICommandBuilder()
                         .executes(result -> {
@@ -88,7 +89,7 @@ public class CommandHandler {
                                         .withSubcommand("INTEGER",
                                                 new CommandAPICommandBuilder()
                                                         .executes(result -> {
-                                                            this.serverManager.getConfigManager().getConfig().put(result.getOptions().get(0).getAsString(), result.getOptions().get(1).getAsInteger());
+                                                            this.serverManager.getConfigManager().getConfigObject().put(result.getOptions().get(0).getAsString(), result.getOptions().get(1).getAsInteger());
                                                             ((CommandSender) result.getSender()).respond("Updated value");
                                                         })
                                                         .executesNoPermission(DefaultCommandExecutors.noPermissionExecutor())
@@ -103,12 +104,13 @@ public class CommandHandler {
                                                                         )
                                                                         .build()
                                                         )
+                                                        .setPermissionRequest(CommandAPIPermissionRequest.requirePermissionLevel(1))
                                                         .build()
                                         )
                                         .withSubcommand("LONG",
                                                 new CommandAPICommandBuilder()
                                                         .executes(result -> {
-                                                            this.serverManager.getConfigManager().getConfig().put(result.getOptions().get(0).getAsString(), result.getOptions().get(1).getAsLong());
+                                                            this.serverManager.getConfigManager().getConfigObject().put(result.getOptions().get(0).getAsString(), result.getOptions().get(1).getAsLong());
                                                             ((CommandSender) result.getSender()).respond("Updated value");
                                                         })
                                                         .executesNoPermission(DefaultCommandExecutors.noPermissionExecutor())
@@ -123,12 +125,13 @@ public class CommandHandler {
                                                                         )
                                                                         .build()
                                                         )
+                                                        .setPermissionRequest(CommandAPIPermissionRequest.requirePermissionLevel(1))
                                                         .build()
                                         )
                                         .withSubcommand("FLOAT",
                                                 new CommandAPICommandBuilder()
                                                         .executes(result -> {
-                                                            this.serverManager.getConfigManager().getConfig().put(result.getOptions().get(0).getAsString(), result.getOptions().get(1).getAsFloat());
+                                                            this.serverManager.getConfigManager().getConfigObject().put(result.getOptions().get(0).getAsString(), result.getOptions().get(1).getAsFloat());
                                                             ((CommandSender) result.getSender()).respond("Updated value");
                                                         })
                                                         .executesNoPermission(DefaultCommandExecutors.noPermissionExecutor())
@@ -143,12 +146,13 @@ public class CommandHandler {
                                                                         )
                                                                         .build()
                                                         )
+                                                        .setPermissionRequest(CommandAPIPermissionRequest.requirePermissionLevel(1))
                                                         .build()
                                         )
                                         .withSubcommand("DOUBLE",
                                                 new CommandAPICommandBuilder()
                                                         .executes(result -> {
-                                                            this.serverManager.getConfigManager().getConfig().put(result.getOptions().get(0).getAsString(), result.getOptions().get(1).getAsDouble());
+                                                            this.serverManager.getConfigManager().getConfigObject().put(result.getOptions().get(0).getAsString(), result.getOptions().get(1).getAsDouble());
                                                             ((CommandSender) result.getSender()).respond("Updated value");
                                                         })
                                                         .executesNoPermission(DefaultCommandExecutors.noPermissionExecutor())
@@ -163,12 +167,13 @@ public class CommandHandler {
                                                                         )
                                                                         .build()
                                                         )
+                                                        .setPermissionRequest(CommandAPIPermissionRequest.requirePermissionLevel(1))
                                                         .build()
                                         )
                                         .withSubcommand("BOOLEAN",
                                                 new CommandAPICommandBuilder()
                                                         .executes(result -> {
-                                                            this.serverManager.getConfigManager().getConfig().put(result.getOptions().get(0).getAsString(), result.getOptions().get(1).getAsBoolean());
+                                                            this.serverManager.getConfigManager().getConfigObject().put(result.getOptions().get(0).getAsString(), result.getOptions().get(1).getAsBoolean());
                                                             ((CommandSender) result.getSender()).respond("Updated value");
                                                         })
                                                         .executesNoPermission(DefaultCommandExecutors.noPermissionExecutor())
@@ -183,12 +188,13 @@ public class CommandHandler {
                                                                         )
                                                                         .build()
                                                         )
+                                                        .setPermissionRequest(CommandAPIPermissionRequest.requirePermissionLevel(1))
                                                         .build()
                                         )
                                         .withSubcommand("CHARACTER",
                                                 new CommandAPICommandBuilder()
                                                         .executes(result -> {
-                                                            this.serverManager.getConfigManager().getConfig().put(result.getOptions().get(0).getAsString(), result.getOptions().get(1).getAsChar());
+                                                            this.serverManager.getConfigManager().getConfigObject().put(result.getOptions().get(0).getAsString(), result.getOptions().get(1).getAsChar());
                                                             ((CommandSender) result.getSender()).respond("Updated value");
                                                         })
                                                         .executesNoPermission(DefaultCommandExecutors.noPermissionExecutor())
@@ -203,12 +209,13 @@ public class CommandHandler {
                                                                         )
                                                                         .build()
                                                         )
+                                                        .setPermissionRequest(CommandAPIPermissionRequest.requirePermissionLevel(1))
                                                         .build()
                                         )
                                         .withSubcommand("STRING",
                                                 new CommandAPICommandBuilder()
                                                         .executes(result -> {
-                                                            this.serverManager.getConfigManager().getConfig().put(result.getOptions().get(0).getAsString(), result.getOptions().get(1).getAsString());
+                                                            this.serverManager.getConfigManager().getConfigObject().put(result.getOptions().get(0).getAsString(), result.getOptions().get(1).getAsString());
                                                             ((CommandSender) result.getSender()).respond("Updated value");
                                                         })
                                                         .executesNoPermission(DefaultCommandExecutors.noPermissionExecutor())
@@ -223,8 +230,19 @@ public class CommandHandler {
                                                                         )
                                                                         .build()
                                                         )
+                                                        .setPermissionRequest(CommandAPIPermissionRequest.requirePermissionLevel(1))
                                                         .build()
                                         )
+                                        .build()
+                        )
+                        .withSubcommand("load",
+                                new CommandAPICommandBuilder()
+                                        .executes(result -> {
+                                            this.serverManager.getConfigManager().loadConfig(null);
+                                            ((CommandSender) result.getSender()).respond("Loaded config file");
+                                        })
+                                        .executesNoPermission(DefaultCommandExecutors.noPermissionExecutor())
+                                        .setPermissionRequest(CommandAPIPermissionRequest.requirePermissionLevel(1))
                                         .build()
                         )
                         .executesNoPermission(DefaultCommandExecutors.noPermissionExecutor())
