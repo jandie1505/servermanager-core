@@ -20,6 +20,8 @@ public class ServerManager {
     private final JDAManager jdaManager;
 
     public ServerManager(String overrideConfig) {
+        // -- INIT --
+
         this.configManager = new ConfigManager(this, overrideConfig);
 
         this.commandHandler = new CommandHandler(this);
@@ -37,6 +39,8 @@ public class ServerManager {
         // JDA Manager
         this.jdaManager = new JDAManager(this);
         this.logger.info("Created JDA manager");
+
+        // -- STARTING --
 
         // Start Terminal Console
         this.terminalConsole.start();
