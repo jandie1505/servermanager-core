@@ -1,8 +1,10 @@
 package net.jandie1505.servermanager;
 
+import net.jandie1505.servermanager.bot.JDAManager;
 import net.jandie1505.servermanager.config.ConfigManager;
 import net.jandie1505.servermanager.console.CommandHandler;
 import net.jandie1505.servermanager.console.TerminalConsole;
+import net.jandie1505.servermanager.database.DatabaseManager;
 import net.jandie1505.servermanager.logger.Logger;
 
 import java.util.HashMap;
@@ -14,6 +16,8 @@ public class ServerManager {
     private final CommandHandler commandHandler;
     private final TerminalConsole terminalConsole;
     private final Logger logger;
+    private final DatabaseManager databaseManager;
+    private final JDAManager jdaManager;
 
     public ServerManager(String overrideConfig) {
         this.configManager = new ConfigManager(this, overrideConfig);
@@ -21,16 +25,29 @@ public class ServerManager {
         this.commandHandler = new CommandHandler(this);
 
         this.terminalConsole = new TerminalConsole(this);
-        this.terminalConsole.start();
 
         this.logger = new Logger(this);
 
         this.logger.info("---- STARTING SERVERMANAGER ----");
 
+        // Database Manager
+        this.databaseManager = new DatabaseManager(this);
+        this.logger.info("Created database manager");
+
+        // JDA Manager
+        this.jdaManager = new JDAManager(this);
+        this.logger.info("Created JDA manager");
+
+        // Start Terminal Console
+        this.terminalConsole.start();
+        this.logger.info("Terminal console started");
+
+        // Setup system commands
         this.commandHandler.setupSystemCommands();
         this.logger.info("System commands loaded");
 
-        this.logger.info("Startup complete");
+        // Run last
+        this.logger.info("STARTUP COMPLETE");
     }
 
     public void shutdown() {
@@ -54,6 +71,14 @@ public class ServerManager {
 
     public Logger getLogger() {
         return this.logger;
+    }
+
+    public DatabaseManager getDatabaseManager() {
+        return this.databaseManager;
+    }
+
+    public JDAManager getJdaManager() {
+        return this.jdaManager;
     }
 
     public static ServerManager instance;
