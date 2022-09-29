@@ -6,6 +6,7 @@ import net.jandie1505.servermanager.console.CommandHandler;
 import net.jandie1505.servermanager.console.TerminalConsole;
 import net.jandie1505.servermanager.database.DatabaseManager;
 import net.jandie1505.servermanager.logger.Logger;
+import net.jandie1505.servermanager.plugins.PluginManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +19,7 @@ public class ServerManager {
     private final Logger logger;
     private final DatabaseManager databaseManager;
     private final JDAManager jdaManager;
+    private final PluginManager pluginManager;
 
     public ServerManager(String overrideConfig) {
         // -- INIT --
@@ -39,6 +41,10 @@ public class ServerManager {
         // JDA Manager
         this.jdaManager = new JDAManager(this);
         this.logger.info("Created JDA manager");
+
+        // Plugin Manager
+        this.pluginManager = new PluginManager(this);
+        this.logger.info("Created plugin manager");
 
         // -- STARTING --
 
@@ -83,6 +89,10 @@ public class ServerManager {
 
     public JDAManager getJdaManager() {
         return this.jdaManager;
+    }
+
+    public PluginManager getPluginManager() {
+        return this.pluginManager;
     }
 
     public static ServerManager instance;
