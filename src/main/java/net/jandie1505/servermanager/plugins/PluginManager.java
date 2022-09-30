@@ -2,23 +2,26 @@ package net.jandie1505.servermanager.plugins;
 
 import net.jandie1505.servermanager.ServerManager;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.ServiceLoader;
 
 public class PluginManager {
     private final ServerManager serverManager;
-    private final Map<UUID, Plugin> enabledPlugins;
+    private final List<PluginHandler> plugins;
 
     public PluginManager(ServerManager serverManager) {
         this.serverManager = serverManager;
-        this.enabledPlugins = Collections.synchronizedMap(new HashMap<>());
+        this.plugins = Collections.synchronizedList(new ArrayList<>());
     }
 
     /**
      * Get a list of all loaded plugins
      * @return plugin
      */
-    public List<Plugin> getPlugins() {
-        return List.copyOf(this.enabledPlugins.values());
+    public List<PluginHandler> getPlugins() {
+        return this.plugins;
     }
 
     public ServerManager getServerManager() {

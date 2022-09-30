@@ -9,11 +9,11 @@ import net.jandie1505.consolecommandapi.executors.CommandAPIPermissionRequest;
 import net.jandie1505.servermanager.ServerManager;
 import org.json.JSONException;
 
-public class CommandHandler {
+public class CommandManager {
     private final ServerManager serverManager;
     private final CommandAPICommandHandler commandHandler;
 
-    public CommandHandler(ServerManager serverManager) {
+    public CommandManager(ServerManager serverManager) {
         this.serverManager = serverManager;
 
         this.commandHandler = new CommandAPICommandHandlerBuilder()

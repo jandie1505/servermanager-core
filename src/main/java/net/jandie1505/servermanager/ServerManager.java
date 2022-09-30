@@ -2,7 +2,7 @@ package net.jandie1505.servermanager;
 
 import net.jandie1505.servermanager.bot.JDAManager;
 import net.jandie1505.servermanager.config.ConfigManager;
-import net.jandie1505.servermanager.console.CommandHandler;
+import net.jandie1505.servermanager.console.CommandManager;
 import net.jandie1505.servermanager.console.TerminalConsole;
 import net.jandie1505.servermanager.database.DatabaseManager;
 import net.jandie1505.servermanager.logger.Logger;
@@ -14,7 +14,7 @@ import java.util.Map;
 public class ServerManager {
     private Thread managerThread;
     private final ConfigManager configManager;
-    private final CommandHandler commandHandler;
+    private final CommandManager commandManager;
     private final TerminalConsole terminalConsole;
     private final Logger logger;
     private final DatabaseManager databaseManager;
@@ -26,7 +26,7 @@ public class ServerManager {
 
         this.configManager = new ConfigManager(this, overrideConfig);
 
-        this.commandHandler = new CommandHandler(this);
+        this.commandManager = new CommandManager(this);
 
         this.terminalConsole = new TerminalConsole(this);
 
@@ -53,7 +53,7 @@ public class ServerManager {
         this.logger.info("Terminal console started");
 
         // Setup system commands
-        this.commandHandler.setupSystemCommands();
+        this.commandManager.setupSystemCommands();
         this.logger.info("System commands loaded");
 
         // Run last
@@ -71,8 +71,8 @@ public class ServerManager {
         return this.configManager;
     }
 
-    public CommandHandler getCommandHandler() {
-        return this.commandHandler;
+    public CommandManager getCommandHandler() {
+        return this.commandManager;
     }
 
     public TerminalConsole getTerminalConsole() {
