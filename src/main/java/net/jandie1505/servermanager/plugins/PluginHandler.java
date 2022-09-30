@@ -1,13 +1,19 @@
 package net.jandie1505.servermanager.plugins;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class PluginHandler {
     private final PluginManager pluginManager;
     private final Plugin plugin;
+    private final List<Runnable> services;
     private boolean enabled;
 
     public PluginHandler(PluginManager pluginManager, Plugin plugin) {
         this.pluginManager = pluginManager;
         this.plugin = plugin;
+        this.services = Collections.synchronizedList(new ArrayList<>());
         this.enabled = false;
     }
 
@@ -47,5 +53,9 @@ public class PluginHandler {
      */
     public Plugin getPlugin() {
         return this.plugin;
+    }
+
+    public List<Runnable> getServices() {
+        return List.copyOf(this.services);
     }
 }
