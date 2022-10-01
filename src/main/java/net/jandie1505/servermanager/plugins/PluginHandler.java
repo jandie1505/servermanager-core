@@ -24,14 +24,20 @@ public final class PluginHandler {
      * Enables the plugin
      */
     public void enablePlugin() {
-        this.enabled = true;
+        if (!this.enabled) {
+            this.enabled = true;
+            this.pluginManager.getServerManager().getLogger().info("Enabled plugin " + this.name);
+        }
     }
 
     /**
      * Disables the plugin
      */
     public void disablePlugin() {
-        this.enabled = false;
+        if (this.enabled) {
+            this.enabled = false;
+            this.pluginManager.getServerManager().getLogger().info("Disabled plugin " + this.name);
+        }
     }
 
     /**

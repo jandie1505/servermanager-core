@@ -13,7 +13,7 @@ public abstract class Plugin {
 
     public void onDisable() {}
 
-    public PluginHandler getPluginManager() {
+    public PluginHandler getPluginHandler() {
         return this.pluginHandler;
     }
 }

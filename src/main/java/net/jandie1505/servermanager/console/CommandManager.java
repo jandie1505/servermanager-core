@@ -7,7 +7,10 @@ import net.jandie1505.consolecommandapi.command.CommandAPICommandHandler;
 import net.jandie1505.consolecommandapi.enums.CommandAPIOptionType;
 import net.jandie1505.consolecommandapi.executors.CommandAPIPermissionRequest;
 import net.jandie1505.servermanager.ServerManager;
+import net.jandie1505.servermanager.plugins.PluginHandler;
 import org.json.JSONException;
+
+import java.util.List;
 
 public final class CommandManager {
     private final ServerManager serverManager;
@@ -246,6 +249,88 @@ public final class CommandManager {
                                             ((CommandSender) result.getSender()).respond("Loaded config file");
                                         })
                                         .executesNoPermission(DefaultCommandExecutors.noPermissionExecutor())
+                                        .setPermissionRequest(CommandAPIPermissionRequest.requirePermissionLevel(1))
+                                        .build()
+                        )
+                        .executesNoPermission(DefaultCommandExecutors.noPermissionExecutor())
+                        .setPermissionRequest(CommandAPIPermissionRequest.requirePermissionLevel(1))
+                        .build()
+        );
+
+        this.commandHandler.addCommand("plugin",
+                new CommandAPICommandBuilder()
+                        .executes(result -> ((CommandSender) result.getSender()).respond("PLUGIN COMMAND USAGE:\n" +
+                                "plugin list\n" +
+                                "plugin enable <plugin-id>\n" +
+                                "plugin disable <plugin-id>\n" +
+                                "plugin services\n"))
+                        .withSubcommand("list",
+                                new CommandAPICommandBuilder()
+                                        .executes(result -> {
+                                            String msg = "| ID | NAME | ENABLED |\n";
+                                            List<PluginHandler> pluginHandlers = this.serverManager.getPluginManager().getPlugins();
+
+                                            for(int i = 0; i < pluginHandlers.size(); i++) {
+                                                msg = msg + "| " + i + " | " + pluginHandlers.get(i) + " | " + pluginHandlers.get(i).isEnabled() + " |\n";
+                                            }
+
+                                            msg = msg + pluginHandlers.size() + " plugin(s) loaded";
+
+                                            ((CommandSender) result.getSender()).respond(msg);
+                                        })
+                                        .executesNoPermission(DefaultCommandExecutors.noPermissionExecutor())
+                                        .setPermissionRequest(CommandAPIPermissionRequest.requirePermissionLevel(1))
+                                        .build()
+                        )
+                        .withSubcommand("enable",
+                                new CommandAPICommandBuilder()
+                                        .executes(result -> {
+                                            try {
+                                                PluginHandler pluginHandler = this.serverManager.getPluginManager().getPlugins().get(result.getOptions().get(0).getAsInteger());
+
+                                                if (!pluginHandler.isEnabled()) {
+                                                    pluginHandler.enablePlugin();
+                                                    ((CommandSender) result.getSender()).respond("Plugin enabled");
+                                                } else {
+                                                    ((CommandSender) result.getSender()).respond("Plugin is already enabled");
+                                                }
+                                            } catch (IndexOutOfBoundsException e) {
+                                                ((CommandSender) result.getSender()).respond("Plugin ID does not exist");
+                                            }
+                                        })
+                                        .executesUnsuccessful(result -> ((CommandSender) result.getSender()).respond("COMMAND USAGE: plugin enable <plugin-id>"))
+                                        .executesNoPermission(DefaultCommandExecutors.noPermissionExecutor())
+                                        .setOption(
+                                                new CommandAPIOptionBuilder(CommandAPIOptionType.INTEGER)
+                                                        .setRequired(true)
+                                                        .build()
+                                        )
+                                        .setPermissionRequest(CommandAPIPermissionRequest.requirePermissionLevel(1))
+                                        .build()
+                        )
+                        .withSubcommand("disable",
+                                new CommandAPICommandBuilder()
+                                        .executes(result -> {
+                                            try {
+                                                PluginHandler pluginHandler = this.serverManager.getPluginManager().getPlugins().get(result.getOptions().get(0).getAsInteger());
+
+                                                if (pluginHandler.isEnabled()) {
+                                                    pluginHandler.disablePlugin();
+                                                    ((CommandSender) result.getSender()).respond("Plugin disabled");
+                                                } else {
+                                                    ((CommandSender) result.getSender()).respond("Plugin is already disabled");
+                                                }
+                                            } catch (IndexOutOfBoundsException e) {
+                                                ((CommandSender) result.getSender()).respond("Plugin ID does not exist");
+                                            }
+                                        })
+                                        .executesUnsuccessful(result -> ((CommandSender) result.getSender()).respond("COMMAND USAGE: plugin disable <plugin-id>"))
+                                        .executesNoPermission(DefaultCommandExecutors.noPermissionExecutor())
+                                        .setOption(
+                                                new CommandAPIOptionBuilder(CommandAPIOptionType.INTEGER)
+                                                        .setRequired(true)
+                                                        .build()
+                                        )
                                         .setPermissionRequest(CommandAPIPermissionRequest.requirePermissionLevel(1))
                                         .build()
                         )
