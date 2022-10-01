@@ -11,7 +11,7 @@ import net.jandie1505.servermanager.plugins.PluginManager;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ServerManager {
+public final class ServerManager {
     private Thread managerThread;
     private final ConfigManager configManager;
     private final CommandManager commandManager;

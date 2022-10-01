@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import java.io.*;
 
-public class ConfigManager {
+public final class ConfigManager {
     private final ServerManager serverManager;
     private JSONObject config;
 

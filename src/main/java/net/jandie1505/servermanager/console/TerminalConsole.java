@@ -7,7 +7,7 @@ import org.jline.reader.LineReaderBuilder;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class TerminalConsole implements Runnable, CommandSender {
+public final class TerminalConsole implements Runnable, CommandSender {
     private final ServerManager serverManager;
     private final LineReader lineReader;
     private Thread thread;

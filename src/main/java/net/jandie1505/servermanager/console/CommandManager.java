@@ -9,7 +9,7 @@ import net.jandie1505.consolecommandapi.executors.CommandAPIPermissionRequest;
 import net.jandie1505.servermanager.ServerManager;
 import org.json.JSONException;
 
-public class CommandManager {
+public final class CommandManager {
     private final ServerManager serverManager;
     private final CommandAPICommandHandler commandHandler;
 

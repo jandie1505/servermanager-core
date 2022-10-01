@@ -2,15 +2,12 @@ package net.jandie1505.servermanager.bot;
 
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.hooks.EventListener;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.api.sharding.ShardManager;
 import net.jandie1505.servermanager.ServerManager;
 
-import java.util.List;
-
-public class JDAManager {
+public final class JDAManager {
     private final ServerManager serverManager;
     private ShardManager shardManager;
 

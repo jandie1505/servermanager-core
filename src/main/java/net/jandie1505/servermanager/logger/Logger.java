@@ -6,7 +6,7 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Logger {
+public final class Logger {
     private final ServerManager serverManager;
     private final File logFile;
 

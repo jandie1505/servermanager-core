@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class PluginHandler {
+public final class PluginHandler {
     private final PluginManager pluginManager;
     private final String name;
     private final Plugin plugin;

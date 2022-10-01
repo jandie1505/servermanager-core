@@ -2,7 +2,7 @@ package net.jandie1505.servermanager.database;
 
 import net.jandie1505.servermanager.ServerManager;
 
-public class DatabaseManager {
+public final class DatabaseManager {
     private final ServerManager serverManager;
 
     public DatabaseManager(ServerManager serverManager) {
