@@ -1,9 +1,11 @@
 package net.jandie1505.servermanager.plugins;
 
 public abstract class Plugin {
-    private final PluginHandler pluginHandler;
+    private PluginHandler pluginHandler;
 
-    public Plugin(PluginHandler pluginHandler) {
+    public Plugin() {}
+
+    void init(PluginHandler pluginHandler) {
         this.pluginHandler = pluginHandler;
     }
 

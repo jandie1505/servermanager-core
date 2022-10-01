@@ -58,6 +58,8 @@ public class ServerManager {
 
         // Run last
         this.logger.info("STARTUP COMPLETE");
+
+        this.pluginManager.loadPlugins();
     }
 
     public void shutdown() {

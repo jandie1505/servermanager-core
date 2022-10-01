@@ -13,6 +13,7 @@ public class PluginHandler {
     public PluginHandler(PluginManager pluginManager, Plugin plugin) {
         this.pluginManager = pluginManager;
         this.plugin = plugin;
+        this.plugin.init(this);
         this.services = Collections.synchronizedList(new ArrayList<>());
         this.enabled = false;
     }
