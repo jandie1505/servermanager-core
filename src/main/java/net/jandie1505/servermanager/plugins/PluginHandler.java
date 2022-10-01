@@ -84,6 +84,30 @@ public final class PluginHandler {
     }
 
     /**
+     * Output info message with plugin name to console
+     * @param out message
+     */
+    public void logInfo(String out) {
+        this.getPluginManager().getServerManager().getLogger().info("[" + this.name + "] " + out);
+    }
+
+    /**
+     * Output warning message with plugin name to console
+     * @param out message
+     */
+    public void logWarning(String out) {
+        this.getPluginManager().getServerManager().getLogger().warning("[" + this.name + "] " + out);
+    }
+
+    /**
+     * Output error message with plugin name to console
+     * @param out message
+     */
+    public void logError(String out) {
+        this.getPluginManager().getServerManager().getLogger().error("[" + this.name + "] " + out);
+    }
+
+    /**
      * Get the plugin manager
      * @return PluginManager
      */
