@@ -56,10 +56,12 @@ public final class ServerManager {
         this.commandManager.setupSystemCommands();
         this.logger.info("System commands loaded");
 
+        // Loading plugins
+        this.pluginManager.loadPlugins();
+        this.logger.info("Loaded plugins");
+
         // Run last
         this.logger.info("STARTUP COMPLETE");
-
-        this.pluginManager.loadPlugins();
     }
 
     public void shutdown() {
