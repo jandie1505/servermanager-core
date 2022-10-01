@@ -6,12 +6,14 @@ import java.util.List;
 
 public class PluginHandler {
     private final PluginManager pluginManager;
+    private final String name;
     private final Plugin plugin;
     private final List<Runnable> services;
     private boolean enabled;
 
-    public PluginHandler(PluginManager pluginManager, Plugin plugin) {
+    public PluginHandler(PluginManager pluginManager, String name, Plugin plugin) {
         this.pluginManager = pluginManager;
+        this.name = name;
         this.plugin = plugin;
         this.plugin.init(this);
         this.services = Collections.synchronizedList(new ArrayList<>());
@@ -46,6 +48,14 @@ public class PluginHandler {
      */
     public PluginManager getPluginManager()  {
         return this.pluginManager;
+    }
+
+    /**
+     * Get the plugin's name
+     * @return String
+     */
+    public String getName() {
+        return this.name;
     }
 
     /**

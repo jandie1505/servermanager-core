@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 
-public class PluginManager {
+public final class PluginManager {
     private final ServerManager serverManager;
     private final List<PluginHandler> plugins;
 
@@ -23,6 +23,12 @@ public class PluginManager {
         this.plugins = Collections.synchronizedList(new ArrayList<>());
     }
 
+    /**
+     * This method loads plugins.
+     * It is only for ServerManager.
+     * Don't call it as a plugin author.
+     */
+    @Deprecated
     public void loadPlugins() {
         try {
             File pluginDir = new File(System.getProperty("user.dir"), "plugins");
@@ -57,18 +63,35 @@ public class PluginManager {
 
                         JSONObject pluginJSON = new JSONObject(out);
 
+                        String pluginMain = pluginJSON.getString("main");
+                        String pluginName;
+
+                        if (pluginJSON.has("name")) {
+                            pluginName = pluginJSON.getString("name");
+                        } else {
+                            pluginName = pluginMain;
+                        }
+
                         URL[] urls = new URL[] {pluginFile.toURI().toURL()};
                         ClassLoader loader = new URLClassLoader(urls);
-                        Class c = loader.loadClass(pluginJSON.getString("main"));
+                        Class c = loader.loadClass(pluginMain);
                         Object pluginObject = c.newInstance();
 
                         if (pluginObject instanceof Plugin) {
                             Plugin plugin = (Plugin) pluginObject;
-                            this.plugins.add(new PluginHandler(this, plugin));
+                            this.plugins.add(new PluginHandler(this, pluginName, plugin));
+                            this.serverManager.getLogger().info("Loaded plugin " + pluginName);
                         }
-                    } catch (IOException | JSONException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-                        this.serverManager.getLogger().warning("Failed to load " + pluginFile.getName());
-                        e.printStackTrace();
+                    } catch (IOException e) {
+                        this.serverManager.getLogger().warning("Failed to load " + pluginFile.getName() + ": IO Error");
+                    } catch (JSONException e) {
+                        this.serverManager.getLogger().warning("Failed to load " + pluginFile.getName() + ": plugin.json file broken");
+                    } catch (NullPointerException e) {
+                        this.serverManager.getLogger().warning("Failed to load " + pluginFile.getName() + ": plugin.json file missing or ClassLoader error");
+                    } catch (ClassNotFoundException e) {
+                        this.serverManager.getLogger().warning("Failed to load " + pluginFile.getName() + ": main class not found");
+                    } catch (IllegalAccessException | InstantiationException e) {
+                        this.serverManager.getLogger().warning("Failed to load " + pluginFile.getName() + ": failed to create instance of main class");
                     }
                 }
             }
