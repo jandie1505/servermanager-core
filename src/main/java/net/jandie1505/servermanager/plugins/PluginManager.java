@@ -102,6 +102,24 @@ public final class PluginManager {
     }
 
     /**
+     * Enable all plugins
+     */
+    public void enableAll() {
+        for (PluginHandler pluginHandler : this.plugins) {
+            pluginHandler.enablePlugin();
+        }
+    }
+
+    /**
+     * Disable all plugins
+     */
+    public void disableAll() {
+        for (PluginHandler pluginHandler : this.plugins) {
+            pluginHandler.disablePlugin();
+        }
+    }
+
+    /**
      * Get a list of all loaded plugins
      * @return plugin
      */

@@ -10,6 +10,7 @@ import net.jandie1505.servermanager.plugins.PluginManager;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public final class ServerManager {
     private Thread managerThread;
@@ -65,7 +66,30 @@ public final class ServerManager {
     }
 
     public void shutdown() {
+        Thread thread = new Thread(() -> {
+            int time = 60;
+            while (true) {
+                if (time <= 0) {
+                    try {
+                        this.logger.warning("Calling System.exit because normal shutdown is not working");
+                    } catch (Exception ignored) {
+                        // ignored
+                    }
+                    System.exit(1);
+                }
+                time--;
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (Exception ignored) {
+                    // ignored
+                }
+            }
+        });
+        thread.setName("servermanager-shutdownenforcer");
+        thread.setDaemon(true);
+        thread.start();
         this.logger.info("Shutting down...");
+        this.pluginManager.disableAll();
         this.terminalConsole.stop();
         //this.managerThread.interrupt();
         this.terminalConsole.printLog("---- SHUTDOWN COMPLETED ----");
