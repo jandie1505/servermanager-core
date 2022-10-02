@@ -92,6 +92,8 @@ public final class ConfigManager {
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put("token", "");
+        jsonObject.put("autoStartJDA", true);
+        jsonObject.put("autoEnablePlugins", true);
 
         return jsonObject;
     }

@@ -101,6 +101,8 @@ public final class PluginManager {
             this.serverManager.getLogger().error(e + ";" + Arrays.toString(e.getStackTrace()) + ";" + e.getMessage());
             e.printStackTrace();
         }
+
+        this.serverManager.getLogger().info("Loaded plugins");
     }
 
     /**

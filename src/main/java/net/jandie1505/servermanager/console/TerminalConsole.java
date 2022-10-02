@@ -19,9 +19,11 @@ public final class TerminalConsole implements Runnable, CommandSender {
 
     @Override
     public void run() {
+        this.serverManager.getLogger().info("Terminal console started");
         while (!Thread.currentThread().isInterrupted() && Thread.currentThread() == this.thread) {
             this.serverManager.getCommandHandler().executeCommand(this, this.lineReader.readLine("console@servermanager# ").split(" "));
         }
+        this.serverManager.getLogger().info("Terminal console stopped");
     }
 
     public void start() {

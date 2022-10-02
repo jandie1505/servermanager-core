@@ -58,15 +58,12 @@ public final class ServerManager {
 
         // Start Terminal Console
         this.terminalConsole.start();
-        this.logger.info("Terminal console started");
 
         // Setup system commands
         this.commandManager.setupSystemCommands();
-        this.logger.info("System commands loaded");
 
         // Loading plugins
         this.pluginManager.loadPlugins();
-        this.logger.info("Loaded plugins");
 
         // Run last
         this.eventHandler.fireSMEvent(new StartCompleteEvent(this));

@@ -338,6 +338,8 @@ public final class CommandManager {
                         .setPermissionRequest(CommandAPIPermissionRequest.requirePermissionLevel(1))
                         .build()
         );
+
+        this.serverManager.getLogger().info("System commands loaded");
     }
 
     public void executeCommand(CommandSender sender, String[] command) {
