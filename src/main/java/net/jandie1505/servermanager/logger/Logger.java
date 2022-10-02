@@ -1,6 +1,7 @@
 package net.jandie1505.servermanager.logger;
 
 import net.jandie1505.servermanager.ServerManager;
+import net.jandie1505.servermanager.events.events.LogEvent;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -29,6 +30,15 @@ public final class Logger {
 
     private void logEntry(String content) {
         this.serverManager.getTerminalConsole().printLog(content);
+
+        LocalDateTime localDateTime = LocalDateTime.now();
+
+        this.fileLogEntry(localDateTime, content);
+
+        this.serverManager.getEventHandler().fireSMEvent(new LogEvent(this, localDateTime, content));
+    }
+
+    private void fileLogEntry(LocalDateTime timestamp, String content) {
         try {
             if (!this.logFile.exists()) {
                 this.logFile.createNewFile();
@@ -38,16 +48,15 @@ public final class Logger {
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             PrintWriter printWriter = new PrintWriter(bufferedWriter);
 
-            LocalDateTime localDateTime = LocalDateTime.now();
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
 
-            printWriter.println("[" + dateTimeFormatter.format(localDateTime) + "] " + content);
+            printWriter.println("[" + dateTimeFormatter.format(timestamp) + "] " + content);
 
             printWriter.close();
             bufferedWriter.close();
             fileWriter.close();
         } catch (IOException e) {
-            this.serverManager.getTerminalConsole().printLog("LOG FILE IO EXCEPTION");
+
         }
     }
 

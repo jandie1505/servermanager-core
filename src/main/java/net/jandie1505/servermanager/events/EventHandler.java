@@ -15,17 +15,21 @@ public final class EventHandler {
     }
 
     public void fireSMEvent(Event event) {
-        try {
-            this.internalListener.onEvent(event);
-        } catch (Exception e) {
-            this.serverManager.getLogger().warning("Exception while sending ServerManager events to internal listener: " + e + ";" + e.getMessage() + ";" + Arrays.toString(e.getStackTrace()));
-        }
+        Thread thread = new Thread(() -> {
+            try {
+                this.internalListener.onEvent(event);
+            } catch (Exception e) {
+                this.serverManager.getLogger().warning("Exception while sending ServerManager events to internal listener: " + e + ";" + e.getMessage() + ";" + Arrays.toString(e.getStackTrace()));
+            }
 
-        try {
-            this.getServerManager().getPluginManager().redirectEvent(event);
-        } catch (Exception e) {
-            this.serverManager.getLogger().warning("Exception while sending ServerManager events to plugin manager: " + e + ";" + e.getMessage() + ";" + Arrays.toString(e.getStackTrace()));
-        }
+            try {
+                this.getServerManager().getPluginManager().redirectEvent(event);
+            } catch (Exception e) {
+                this.serverManager.getLogger().warning("Exception while sending ServerManager events to plugin manager: " + e + ";" + e.getMessage() + ";" + Arrays.toString(e.getStackTrace()));
+            }
+        });
+        thread.setName("servermanager-event-" + event.toString());
+        thread.start();
     }
 
     public ServerManager getServerManager() {
