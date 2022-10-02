@@ -56,7 +56,7 @@ public final class Logger {
             bufferedWriter.close();
             fileWriter.close();
         } catch (IOException e) {
-
+            this.serverManager.getLogger().error("IO Exception while writing log file");
         }
     }
 
