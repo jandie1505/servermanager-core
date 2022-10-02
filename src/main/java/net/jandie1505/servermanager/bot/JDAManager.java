@@ -21,6 +21,7 @@ public final class JDAManager {
                     .create(this.serverManager.getConfigManager().getConfig().getString("token"), GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS))
                     .setShardsTotal(1)
                     .addEventListeners(new SystemEvents(this))
+                    .addEventListeners(new RedirectEvents(this))
                     .setActivity(Activity.playing("Starting up..."))
                     .setStatus(OnlineStatus.IDLE)
                     .build();

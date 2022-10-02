@@ -6,6 +6,7 @@ import net.jandie1505.servermanager.events.Event;
 import net.jandie1505.servermanager.events.Listener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -177,8 +178,14 @@ public final class PluginHandler {
      * @param event ServerManager event
      */
     void onEvent(Event event) {
-        for (Listener listener : this.listeners) {
-            listener.onEvent(event);
+        if (this.enabled) {
+            for (Listener listener : this.listeners) {
+                try {
+                    listener.onEvent(event);
+                } catch (Exception e) {
+                    this.pluginManager.getServerManager().getLogger().warning("Exception while redirecting ServerManager events to plugin event listeners " + this.getName() + ": " + e + ";" + e.getMessage() + ";" + Arrays.toString(e.getStackTrace()));
+                }
+            }
         }
     }
 
@@ -187,8 +194,14 @@ public final class PluginHandler {
      * @param event JDA event
      */
     void onEvent(GenericEvent event) {
-        for (EventListener eventListener : this.jdaEventListeners) {
-            eventListener.onEvent(event);
+        if (this.enabled) {
+            for (EventListener eventListener : this.jdaEventListeners) {
+                try {
+                    eventListener.onEvent(event);
+                } catch (Exception e) {
+                    this.pluginManager.getServerManager().getLogger().warning("Exception while redirecting JDA events to plugin event listeners " + this.getName() + ": " + e + ";" + e.getMessage() + ";" + Arrays.toString(e.getStackTrace()));
+                }
+            }
         }
     }
 

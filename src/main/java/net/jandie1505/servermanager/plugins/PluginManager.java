@@ -1,6 +1,8 @@
 package net.jandie1505.servermanager.plugins;
 
+import net.dv8tion.jda.api.events.GenericEvent;
 import net.jandie1505.servermanager.ServerManager;
+import net.jandie1505.servermanager.events.Event;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -120,11 +122,49 @@ public final class PluginManager {
     }
 
     /**
+     * Redirect a ServerManager event to all plugin event listeners.
+     * DO NOT CALL THIS AS PLUGIN AUTHOR!
+     * @param event ServerManager Event
+     * @deprecated DO NOT CALL THIS AS PLUGIN AUTHOR!
+     */
+    @Deprecated
+    public void redirectEvent(Event event) {
+        for (PluginHandler pluginHandler : this.getPlugins()) {
+            try {
+                if (pluginHandler.isEnabled()) {
+                    pluginHandler.onEvent(event);
+                }
+            } catch (Exception e) {
+                this.serverManager.getLogger().warning("Exception while redirecting ServerManager events to plugin " + pluginHandler.getName() + ": " + e + ";" + e.getMessage() + ";" + Arrays.toString(e.getStackTrace()));
+            }
+        }
+    }
+
+    /**
+     * Redirect a JDA event to all plugin event listeners.
+     * DO NOT CALL THIS AS PLUGIN AUTHOR!
+     * @param event JDA event
+     * @deprecated DO NOT CALL THIS AS PLUGIN AUTHOR!
+     */
+    @Deprecated
+    public void redirectEvent(GenericEvent event) {
+        for (PluginHandler pluginHandler : this.getPlugins()) {
+            try {
+                if (pluginHandler.isEnabled()) {
+                    pluginHandler.onEvent(event);
+                }
+            } catch (Exception e) {
+                this.serverManager.getLogger().warning("Exception while redirecting JDA events to plugin " + pluginHandler.getName() + ": " + e + ";" + e.getMessage() + ";" + Arrays.toString(e.getStackTrace()));
+            }
+        }
+    }
+
+    /**
      * Get a list of all loaded plugins
      * @return plugin
      */
     public List<PluginHandler> getPlugins() {
-        return this.plugins;
+        return List.copyOf(this.plugins);
     }
 
     public ServerManager getServerManager() {

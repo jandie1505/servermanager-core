@@ -5,6 +5,8 @@ import net.jandie1505.servermanager.config.ConfigManager;
 import net.jandie1505.servermanager.console.CommandManager;
 import net.jandie1505.servermanager.console.TerminalConsole;
 import net.jandie1505.servermanager.database.DatabaseManager;
+import net.jandie1505.servermanager.events.EventHandler;
+import net.jandie1505.servermanager.events.events.StartCompleteEvent;
 import net.jandie1505.servermanager.logger.Logger;
 import net.jandie1505.servermanager.plugins.PluginManager;
 
@@ -21,6 +23,7 @@ public final class ServerManager {
     private final DatabaseManager databaseManager;
     private final JDAManager jdaManager;
     private final PluginManager pluginManager;
+    private final EventHandler eventHandler;
 
     public ServerManager(String overrideConfig) {
         // -- INIT --
@@ -38,6 +41,10 @@ public final class ServerManager {
         // Database Manager
         this.databaseManager = new DatabaseManager(this);
         this.logger.info("Created database manager");
+
+        // Event Handler
+        this.eventHandler = new EventHandler(this);
+        this.logger.info("Created event handler");
 
         // JDA Manager
         this.jdaManager = new JDAManager(this);
@@ -62,6 +69,7 @@ public final class ServerManager {
         this.logger.info("Loaded plugins");
 
         // Run last
+        this.eventHandler.fireSMEvent(new StartCompleteEvent(this));
         this.logger.info("STARTUP COMPLETE");
     }
 
@@ -121,6 +129,10 @@ public final class ServerManager {
 
     public PluginManager getPluginManager() {
         return this.pluginManager;
+    }
+
+    public EventHandler getEventHandler() {
+        return this.eventHandler;
     }
 
     public static ServerManager instance;
