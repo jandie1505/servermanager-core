@@ -1,6 +1,5 @@
 package net.jandie1505.servermanager.events;
 
-import net.dv8tion.jda.api.events.GenericEvent;
 import net.jandie1505.servermanager.ServerManager;
 
 import java.util.Arrays;

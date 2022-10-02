@@ -74,7 +74,7 @@ public final class PluginManager {
                             pluginName = pluginMain;
                         }
 
-                        URL[] urls = new URL[] {pluginFile.toURI().toURL()};
+                        URL[] urls = new URL[]{pluginFile.toURI().toURL()};
                         ClassLoader loader = new URLClassLoader(urls);
                         Class c = loader.loadClass(pluginMain);
                         Object pluginObject = c.newInstance();
@@ -126,6 +126,7 @@ public final class PluginManager {
     /**
      * Redirect a ServerManager event to all plugin event listeners.
      * DO NOT CALL THIS AS PLUGIN AUTHOR!
+     *
      * @param event ServerManager Event
      * @deprecated DO NOT CALL THIS AS PLUGIN AUTHOR!
      */
@@ -145,6 +146,7 @@ public final class PluginManager {
     /**
      * Redirect a JDA event to all plugin event listeners.
      * DO NOT CALL THIS AS PLUGIN AUTHOR!
+     *
      * @param event JDA event
      * @deprecated DO NOT CALL THIS AS PLUGIN AUTHOR!
      */
@@ -163,6 +165,7 @@ public final class PluginManager {
 
     /**
      * Get a list of all loaded plugins
+     *
      * @return plugin
      */
     public List<PluginHandler> getPlugins() {

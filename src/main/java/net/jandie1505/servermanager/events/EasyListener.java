@@ -5,11 +5,14 @@ import net.jandie1505.servermanager.events.events.StartCompleteEvent;
 
 public abstract class EasyListener implements Listener {
 
-    public void onStartComplete(StartCompleteEvent event) {}
+    public void onStartComplete(StartCompleteEvent event) {
+    }
 
-    public void onLog(LogEvent event) {}
+    public void onLog(LogEvent event) {
+    }
 
-    public void unknownEvent(Event event) {}
+    public void unknownEvent(Event event) {
+    }
 
     @Override
     public void onEvent(Event event) {

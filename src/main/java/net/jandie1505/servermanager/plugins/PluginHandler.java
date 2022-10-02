@@ -52,6 +52,7 @@ public final class PluginHandler {
 
     /**
      * Check if the plugin is enabled
+     *
      * @return enabled=true
      */
     public boolean isEnabled() {
@@ -62,8 +63,9 @@ public final class PluginHandler {
      * Create a new repeating service.
      * Services are running their code in a specified time interval if the plugin and the service is enabled.
      * Don't use your own repeating threads, use these services feature instead.
+     *
      * @param runnable PluginServiceRunnable (The same as a java runnable, but with the PluginService object as parameter
-     * @param time Time interval the service should be executed. Can be changed during runtime.
+     * @param time     Time interval the service should be executed. Can be changed during runtime.
      * @return PluginService
      */
     public PluginService createService(PluginServiceRunnable runnable, int time) {
@@ -76,6 +78,7 @@ public final class PluginHandler {
      * Remove a repeating service by id.
      * The id is the list index of the service.
      * If a service is running while it's being deleted, it will stop.
+     *
      * @param serviceId list index of the service
      */
     public void deleteService(int serviceId) {
@@ -87,6 +90,7 @@ public final class PluginHandler {
     /**
      * Remove a repeating service by PluginService object.
      * If a service is running while it's being deleted, it will stop.
+     *
      * @param service The PluginService object of the service
      */
     public void deleteService(PluginService service) {
@@ -96,6 +100,7 @@ public final class PluginHandler {
     /**
      * Add a ServerManager event listener.
      * ServerManager event listeners are NOT receiving JDA events. For this, use addJDAEventListener.
+     *
      * @param listener ServerManager event listener
      */
     public void addSMEventListener(Listener listener) {
@@ -105,6 +110,7 @@ public final class PluginHandler {
     /**
      * Remove a ServerManager event listener by id.
      * The id is the list index.
+     *
      * @param listenerId ServerManager event listener id
      */
     public void removeSMEventListener(int listenerId) {
@@ -115,6 +121,7 @@ public final class PluginHandler {
 
     /**
      * Remove a ServerManager event listener by Listener object.
+     *
      * @param listener ServerManager event listener
      */
     public void removeSMEventListener(Listener listener) {
@@ -124,6 +131,7 @@ public final class PluginHandler {
     /**
      * Add a JDA event listener.
      * JDA event listeners are not receiving ServerManager events. For this, use addSMEventListener.
+     *
      * @param listener JDA event listener
      */
     public void addJDAEventListener(Listener listener) {
@@ -133,6 +141,7 @@ public final class PluginHandler {
     /**
      * Remove a JDA event listener by id.
      * The id is the list index.
+     *
      * @param listenerId JDA event listener id
      */
     public void removeJDAEventListener(int listenerId) {
@@ -143,6 +152,7 @@ public final class PluginHandler {
 
     /**
      * Remove a JDA event listener by Listener object.
+     *
      * @param listener JDA event listener
      */
     public void removeJDAEventListener(Listener listener) {
@@ -151,6 +161,7 @@ public final class PluginHandler {
 
     /**
      * Output info message with plugin name to console
+     *
      * @param out message
      */
     public void logInfo(String out) {
@@ -159,6 +170,7 @@ public final class PluginHandler {
 
     /**
      * Output warning message with plugin name to console
+     *
      * @param out message
      */
     public void logWarning(String out) {
@@ -167,6 +179,7 @@ public final class PluginHandler {
 
     /**
      * Output error message with plugin name to console
+     *
      * @param out message
      */
     public void logError(String out) {
@@ -175,6 +188,7 @@ public final class PluginHandler {
 
     /**
      * Internal method for sending events to plugin event listeners
+     *
      * @param event ServerManager event
      */
     void onEvent(Event event) {
@@ -191,6 +205,7 @@ public final class PluginHandler {
 
     /**
      * Internal method for sending events to plugin event listeners
+     *
      * @param event JDA event
      */
     void onEvent(GenericEvent event) {
@@ -207,14 +222,16 @@ public final class PluginHandler {
 
     /**
      * Get the plugin manager
+     *
      * @return PluginManager
      */
-    public PluginManager getPluginManager()  {
+    public PluginManager getPluginManager() {
         return this.pluginManager;
     }
 
     /**
      * Get the plugin's name
+     *
      * @return String
      */
     public String getName() {
@@ -223,6 +240,7 @@ public final class PluginHandler {
 
     /**
      * Get the plugin
+     *
      * @return Plugin
      */
     public Plugin getPlugin() {
@@ -231,6 +249,7 @@ public final class PluginHandler {
 
     /**
      * Get all services of this plugin
+     *
      * @return List of services
      */
     public List<Runnable> getServices() {
@@ -239,6 +258,7 @@ public final class PluginHandler {
 
     /**
      * Get all ServerManager event listeners
+     *
      * @return list of ServerManager event listeners
      */
     public List<Listener> getListeners() {

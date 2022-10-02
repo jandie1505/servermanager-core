@@ -19,7 +19,7 @@ public final class ConfigManager {
         JSONObject overrideConfig = new JSONObject();
         JSONObject configFile = new JSONObject();
 
-        if(overrideConfigString != null) {
+        if (overrideConfigString != null) {
             try {
                 overrideConfig = new JSONObject(overrideConfigString);
             } catch (JSONException ignored) {
@@ -30,7 +30,7 @@ public final class ConfigManager {
         try {
             File file = new File(System.getProperty("user.dir"), "config.json");
 
-            if(!file.exists()) {
+            if (!file.exists()) {
                 file.createNewFile();
 
                 FileWriter writer = new FileWriter(file);
@@ -61,11 +61,11 @@ public final class ConfigManager {
 
         internalConfig = this.getDefaultValues();
 
-        for(String key : configFile.keySet()) {
+        for (String key : configFile.keySet()) {
             internalConfig.put(key, configFile.get(key));
         }
 
-        for(String key : overrideConfig.keySet()) {
+        for (String key : overrideConfig.keySet()) {
             internalConfig.put(key, overrideConfig.get(key));
         }
 
@@ -74,6 +74,7 @@ public final class ConfigManager {
 
     /**
      * Get a copy of the config
+     *
      * @return JSONObject
      */
     public JSONObject getConfig() {
@@ -82,6 +83,7 @@ public final class ConfigManager {
 
     /**
      * Get the config
+     *
      * @return JSONConfig
      */
     public JSONObject getConfigObject() {

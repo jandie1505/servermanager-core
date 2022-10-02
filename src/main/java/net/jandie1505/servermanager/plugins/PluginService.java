@@ -11,7 +11,7 @@ public final class PluginService implements Runnable {
     public PluginService(PluginHandler pluginHandler, PluginServiceRunnable runnable, int time) {
         this.pluginHandler = pluginHandler;
         this.runnable = runnable;
-        if(time <= 0) {
+        if (time <= 0) {
             time = 1;
         }
         this.time = time;
@@ -45,7 +45,7 @@ public final class PluginService implements Runnable {
             new Thread(() -> {
                 int time = 60;
                 while (thread.isAlive()) {
-                    if(time <= 0) {
+                    if (time <= 0) {
                         thread.stop();
                         time = 10;
                         this.pluginHandler.getPluginManager().getServerManager().getLogger().warning("Killed service " + thread.getName());
@@ -58,6 +58,7 @@ public final class PluginService implements Runnable {
 
     /**
      * Set the time in milliseconds
+     *
      * @param time time in milliseconds
      */
     public void setTime(int time) {

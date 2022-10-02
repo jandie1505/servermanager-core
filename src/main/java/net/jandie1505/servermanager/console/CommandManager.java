@@ -270,7 +270,7 @@ public final class CommandManager {
                                             String msg = "| ID | NAME | ENABLED |\n";
                                             List<PluginHandler> pluginHandlers = this.serverManager.getPluginManager().getPlugins();
 
-                                            for(int i = 0; i < pluginHandlers.size(); i++) {
+                                            for (int i = 0; i < pluginHandlers.size(); i++) {
                                                 msg = msg + "| " + i + " | " + pluginHandlers.get(i) + " | " + pluginHandlers.get(i).isEnabled() + " |\n";
                                             }
 

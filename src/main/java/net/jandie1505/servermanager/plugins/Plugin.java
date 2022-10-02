@@ -3,15 +3,18 @@ package net.jandie1505.servermanager.plugins;
 public abstract class Plugin {
     private PluginHandler pluginHandler;
 
-    public Plugin() {}
+    public Plugin() {
+    }
 
     void init(PluginHandler pluginHandler) {
         this.pluginHandler = pluginHandler;
     }
 
-    public void onEnable() {}
+    public void onEnable() {
+    }
 
-    public void onDisable() {}
+    public void onDisable() {
+    }
 
     public PluginHandler getPluginHandler() {
         return this.pluginHandler;
