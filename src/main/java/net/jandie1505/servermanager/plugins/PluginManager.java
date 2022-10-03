@@ -3,6 +3,7 @@ package net.jandie1505.servermanager.plugins;
 import net.dv8tion.jda.api.events.GenericEvent;
 import net.jandie1505.servermanager.ServerManager;
 import net.jandie1505.servermanager.events.Event;
+import net.jandie1505.servermanager.utils.ShutdownCondition;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 
-public final class PluginManager {
+public final class PluginManager implements ShutdownCondition {
     private final ServerManager serverManager;
     private final List<PluginHandler> plugins;
 
@@ -174,5 +175,10 @@ public final class PluginManager {
 
     public ServerManager getServerManager() {
         return this.serverManager;
+    }
+
+    @Override
+    public boolean getShutdownCondition() {
+        return this.serverManager.isShutdown();
     }
 }

@@ -4,13 +4,14 @@ import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
 import net.jandie1505.servermanager.events.Event;
 import net.jandie1505.servermanager.events.Listener;
+import net.jandie1505.servermanager.utils.ShutdownCondition;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public final class PluginHandler {
+public final class PluginHandler implements ShutdownCondition {
     private final PluginManager pluginManager;
     private final String name;
     private final Plugin plugin;
@@ -267,5 +268,10 @@ public final class PluginHandler {
 
     public List<EventListener> getJdaEventListeners() {
         return List.copyOf(this.jdaEventListeners);
+    }
+
+    @Override
+    public boolean getShutdownCondition() {
+        return this.pluginManager.getShutdownCondition();
     }
 }

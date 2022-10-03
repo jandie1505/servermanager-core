@@ -4,8 +4,9 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.internal.utils.config.sharding.ShardingConfig;
 import net.jandie1505.servermanager.ServerManager;
+import net.jandie1505.servermanager.utils.ShutdownCondition;
 
-public final class BotManager {
+public final class BotManager implements ShutdownCondition {
     private final ServerManager serverManager;
     private ExtendedShardManager shardManager;
 
@@ -53,6 +54,7 @@ public final class BotManager {
         return this.shardManager;
     }
 
+    @Override
     public boolean getShutdownCondition() {
         return this.serverManager.isShutdown();
     }

@@ -20,7 +20,7 @@ public final class PluginService implements Runnable {
     @Override
     public void run() {
         this.pluginHandler.getPluginManager().getServerManager().getLogger().info("Service " + thread.getName() + " started");
-        while (!Thread.currentThread().isInterrupted() && this.thread == Thread.currentThread() && this.pluginHandler.isEnabled() && this.pluginHandler.getServices().contains(this)) {
+        while (!Thread.currentThread().isInterrupted() && this.thread == Thread.currentThread() && this.pluginHandler.isEnabled() && this.pluginHandler.getServices().contains(this) && !this.pluginHandler.getShutdownCondition()) {
             try {
                 this.runnable.run(this);
                 TimeUnit.MILLISECONDS.sleep(this.time);
