@@ -1,7 +1,8 @@
-package net.jandie1505.servermanager.bot;
+package net.jandie1505.servermanager.bot.listeners;
 
 import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
+import net.jandie1505.servermanager.bot.BotManager;
 
 import java.util.Arrays;
 
