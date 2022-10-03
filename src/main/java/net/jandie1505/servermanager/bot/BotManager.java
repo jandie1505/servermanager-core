@@ -52,4 +52,8 @@ public final class BotManager {
     public ExtendedShardManager getShardManager() {
         return this.shardManager;
     }
+
+    public boolean getShutdownCondition() {
+        return this.serverManager.isShutdown();
+    }
 }

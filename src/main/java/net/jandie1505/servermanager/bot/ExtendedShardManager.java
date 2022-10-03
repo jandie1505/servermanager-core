@@ -26,7 +26,7 @@ public class ExtendedShardManager extends DefaultShardManager {
         this.botManager = botManager;
         this.shutdownConditionThread = new Thread(() -> {
             while (!Thread.currentThread().isInterrupted() && !this.shutdown.get()) {
-                if (this.botManager.getShardManager() != this) {
+                if (this.botManager.getShardManager() != this || this.botManager.getShutdownCondition()) {
                     this.shutdown();
                 }
                 try {

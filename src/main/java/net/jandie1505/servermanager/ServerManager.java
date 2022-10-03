@@ -24,9 +24,12 @@ public final class ServerManager {
     private final BotManager botManager;
     private final PluginManager pluginManager;
     private final EventHandler eventHandler;
+    private boolean shutdownStatus = false;
 
     public ServerManager(String overrideConfig) {
         // -- INIT --
+
+        this.shutdownStatus = false;
 
         this.configManager = new ConfigManager(this, overrideConfig);
 
@@ -71,6 +74,7 @@ public final class ServerManager {
     }
 
     public void shutdown() {
+        this.shutdownStatus = true;
         Thread thread = new Thread(() -> {
             int time = 60;
             while (true) {
@@ -130,6 +134,10 @@ public final class ServerManager {
 
     public EventHandler getEventHandler() {
         return this.eventHandler;
+    }
+
+    public boolean isShutdown() {
+        return this.shutdownStatus;
     }
 
     public static ServerManager instance;
