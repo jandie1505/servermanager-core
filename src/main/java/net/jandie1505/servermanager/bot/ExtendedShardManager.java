@@ -10,23 +10,23 @@ import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
 public class ExtendedShardManager extends DefaultShardManager {
-    private final JDAManager jdaManager;
+    private final BotManager botManager;
     private final Thread shutdownConditionThread;
 
-    public ExtendedShardManager(@NotNull String token, @NotNull JDAManager jdaManager) {
-        this(token, null, null, null, null, null, null, null, null, jdaManager);
+    public ExtendedShardManager(@NotNull String token, @NotNull BotManager botManager) {
+        this(token, null, null, null, null, null, null, null, null, botManager);
     }
 
-    public ExtendedShardManager(@NotNull String token, @Nullable Collection<Integer> shardIds, @NotNull JDAManager jdaManager) {
-        this(token, shardIds, null, null, null, null, null, null, null, jdaManager);
+    public ExtendedShardManager(@NotNull String token, @Nullable Collection<Integer> shardIds, @NotNull BotManager botManager) {
+        this(token, shardIds, null, null, null, null, null, null, null, botManager);
     }
 
-    public ExtendedShardManager(@NotNull String token, @Nullable Collection<Integer> shardIds, @Nullable ShardingConfig shardingConfig, @Nullable EventConfig eventConfig, @Nullable PresenceProviderConfig presenceConfig, @Nullable ThreadingProviderConfig threadingConfig, @Nullable ShardingSessionConfig sessionConfig, @Nullable ShardingMetaConfig metaConfig, @Nullable ChunkingFilter chunkingFilter, @NotNull JDAManager jdaManager) {
+    public ExtendedShardManager(@NotNull String token, @Nullable Collection<Integer> shardIds, @Nullable ShardingConfig shardingConfig, @Nullable EventConfig eventConfig, @Nullable PresenceProviderConfig presenceConfig, @Nullable ThreadingProviderConfig threadingConfig, @Nullable ShardingSessionConfig sessionConfig, @Nullable ShardingMetaConfig metaConfig, @Nullable ChunkingFilter chunkingFilter, @NotNull BotManager botManager) {
         super(token, shardIds, shardingConfig, eventConfig, presenceConfig, threadingConfig, sessionConfig, metaConfig, chunkingFilter);
-        this.jdaManager = jdaManager;
+        this.botManager = botManager;
         this.shutdownConditionThread = new Thread(() -> {
             while (!Thread.currentThread().isInterrupted() && !this.shutdown.get()) {
-                if (this.jdaManager.getShardManager() != this) {
+                if (this.botManager.getShardManager() != this) {
                     this.shutdown();
                 }
                 try {
@@ -44,11 +44,11 @@ public class ExtendedShardManager extends DefaultShardManager {
         this.shutdownConditionThread.start();
     }
 
-    public JDAManager getJdaManager() {
-        return this.jdaManager;
+    public BotManager getJdaManager() {
+        return this.botManager;
     }
 
-    public boolean getShutdownStatus() {
+    public boolean isShutdown() {
         return this.shutdown.get();
     }
 }

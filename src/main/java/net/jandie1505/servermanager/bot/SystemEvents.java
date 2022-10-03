@@ -3,13 +3,13 @@ package net.jandie1505.servermanager.bot;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class SystemEvents extends ListenerAdapter {
-    private final JDAManager jdaManager;
+    private final BotManager botManager;
 
-    public SystemEvents(JDAManager jdaManager) {
-        this.jdaManager = jdaManager;
+    public SystemEvents(BotManager botManager) {
+        this.botManager = botManager;
     }
 
-    public JDAManager getJdaManager() {
-        return this.jdaManager;
+    public BotManager getJdaManager() {
+        return this.botManager;
     }
 }

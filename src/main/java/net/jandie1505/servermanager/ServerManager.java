@@ -1,6 +1,6 @@
 package net.jandie1505.servermanager;
 
-import net.jandie1505.servermanager.bot.JDAManager;
+import net.jandie1505.servermanager.bot.BotManager;
 import net.jandie1505.servermanager.config.ConfigManager;
 import net.jandie1505.servermanager.console.CommandManager;
 import net.jandie1505.servermanager.console.TerminalConsole;
@@ -21,7 +21,7 @@ public final class ServerManager {
     private final TerminalConsole terminalConsole;
     private final Logger logger;
     private final DatabaseManager databaseManager;
-    private final JDAManager jdaManager;
+    private final BotManager botManager;
     private final PluginManager pluginManager;
     private final EventHandler eventHandler;
 
@@ -47,8 +47,8 @@ public final class ServerManager {
         this.logger.info("Created event handler");
 
         // JDA Manager
-        this.jdaManager = new JDAManager(this);
-        this.logger.info("Created JDA manager");
+        this.botManager = new BotManager(this);
+        this.logger.info("Created bot manager");
 
         // Plugin Manager
         this.pluginManager = new PluginManager(this);
@@ -120,8 +120,8 @@ public final class ServerManager {
         return this.databaseManager;
     }
 
-    public JDAManager getJdaManager() {
-        return this.jdaManager;
+    public BotManager getJdaManager() {
+        return this.botManager;
     }
 
     public PluginManager getPluginManager() {
