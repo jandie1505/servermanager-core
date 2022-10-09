@@ -96,6 +96,7 @@ public final class ConfigManager {
         jsonObject.put("token", "");
         jsonObject.put("autoStartJDA", true);
         jsonObject.put("autoEnablePlugins", true);
+        jsonObject.put("shardsTotal", 1);
 
         return jsonObject;
     }

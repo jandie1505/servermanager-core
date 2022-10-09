@@ -1,5 +1,6 @@
 package net.jandie1505.servermanager;
 
+import net.dv8tion.jda.api.exceptions.InvalidTokenException;
 import net.jandie1505.servermanager.bot.BotManager;
 import net.jandie1505.servermanager.config.ConfigManager;
 import net.jandie1505.servermanager.console.CommandManager;
@@ -73,6 +74,14 @@ public final class ServerManager {
             this.pluginManager.enableAll();
         }
 
+        if (this.configManager.getConfig().getBoolean("autoStartJDA")) {
+            try {
+                this.botManager.startShardManager();
+            } catch (InvalidTokenException e) {
+                this.logger.error("Cannot start bot: invalid token");
+            }
+        }
+
         // Run last
         this.eventHandler.fireSMEvent(new StartCompleteEvent(this));
         this.logger.info("STARTUP COMPLETE");
@@ -129,7 +138,7 @@ public final class ServerManager {
         return this.databaseManager;
     }
 
-    public BotManager getJdaManager() {
+    public BotManager getBotManager() {
         return this.botManager;
     }
 
