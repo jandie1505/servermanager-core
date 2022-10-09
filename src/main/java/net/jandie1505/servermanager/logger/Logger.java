@@ -35,7 +35,9 @@ public final class Logger {
 
         this.fileLogEntry(localDateTime, content);
 
-        this.serverManager.getEventHandler().fireSMEvent(new LogEvent(this, localDateTime, content));
+        if (this.serverManager.getEventHandler() != null) {
+            this.serverManager.getEventHandler().fireSMEvent(new LogEvent(this, localDateTime, content));
+        }
     }
 
     private void fileLogEntry(LocalDateTime timestamp, String content) {
