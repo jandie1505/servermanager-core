@@ -75,16 +75,21 @@ public final class PluginManager implements ShutdownCondition {
                             pluginName = pluginMain;
                         }
 
-                        URL[] urls = new URL[]{pluginFile.toURI().toURL()};
-                        ClassLoader loader = new URLClassLoader(urls);
-                        Class c = loader.loadClass(pluginMain);
-                        Object pluginObject = c.newInstance();
+                        if (!pluginMain.startsWith("net.jandie1505.servermanager")) {
+                            URL[] urls = new URL[]{pluginFile.toURI().toURL()};
+                            ClassLoader loader = new URLClassLoader(urls);
+                            Class c = loader.loadClass(pluginMain);
+                            Object pluginObject = c.newInstance();
 
-                        if (pluginObject instanceof Plugin) {
-                            Plugin plugin = (Plugin) pluginObject;
-                            this.plugins.add(new PluginHandler(this, pluginName, plugin));
-                            this.serverManager.getLogger().info("Loaded plugin " + pluginName);
+                            if (pluginObject instanceof Plugin) {
+                                Plugin plugin = (Plugin) pluginObject;
+                                this.plugins.add(new PluginHandler(this, pluginName, plugin));
+                                this.serverManager.getLogger().info("Loaded plugin " + pluginName);
+                            }
+                        } else {
+                            this.serverManager.getLogger().warning("Failed to load " + pluginFile.getName() + ": Plugins in package net.jandie1505.servermanager cannot be loaded");
                         }
+
                     } catch (IOException e) {
                         this.serverManager.getLogger().warning("Failed to load " + pluginFile.getName() + ": IO Error");
                     } catch (JSONException e) {
