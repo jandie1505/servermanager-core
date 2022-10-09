@@ -41,6 +41,10 @@ public final class PluginHandler implements ShutdownCondition {
         if (!this.enabled) {
             this.enabled = true;
             this.pluginManager.getServerManager().getLogger().info("Enabled plugin " + this.name);
+
+            Thread thread = new Thread(this.plugin::onEnable);
+            thread.setName("servermanager-plugin-onenable-" + this.name);
+            thread.start();
         }
     }
 
@@ -51,6 +55,9 @@ public final class PluginHandler implements ShutdownCondition {
         if (this.enabled) {
             this.enabled = false;
             this.pluginManager.getServerManager().getLogger().info("Disabled plugin " + this.name);
+            Thread thread = new Thread(this.plugin::onEnable);
+            thread.setName("servermanager-plugin-ondisable-" + this.name);
+            thread.start();
         }
     }
 
