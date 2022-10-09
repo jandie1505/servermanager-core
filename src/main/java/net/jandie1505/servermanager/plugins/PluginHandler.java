@@ -6,6 +6,7 @@ import net.jandie1505.servermanager.events.Event;
 import net.jandie1505.servermanager.events.Listener;
 import net.jandie1505.servermanager.utils.ShutdownCondition;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,6 +19,7 @@ public final class PluginHandler implements ShutdownCondition {
     private final List<Runnable> services;
     private final List<Listener> listeners;
     private final List<EventListener> jdaEventListeners;
+    private final File pluginDirectory;
     private boolean enabled;
 
     public PluginHandler(PluginManager pluginManager, String name, Plugin plugin) {
@@ -28,6 +30,7 @@ public final class PluginHandler implements ShutdownCondition {
         this.services = Collections.synchronizedList(new ArrayList<>());
         this.listeners = Collections.synchronizedList(new ArrayList<>());
         this.jdaEventListeners = Collections.synchronizedList(new ArrayList<>());
+        this.pluginDirectory = new File(System.getProperty("user.dir") + "/plugins", this.name);
         this.enabled = false;
     }
 
@@ -268,6 +271,14 @@ public final class PluginHandler implements ShutdownCondition {
 
     public List<EventListener> getJdaEventListeners() {
         return List.copyOf(this.jdaEventListeners);
+    }
+
+    /**
+     * Get the plugin's directory
+     * @return Plugin directory
+     */
+    public File getPluginDirectory() {
+        return this.pluginDirectory;
     }
 
     @Override
