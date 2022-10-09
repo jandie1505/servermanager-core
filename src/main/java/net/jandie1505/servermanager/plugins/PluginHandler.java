@@ -55,7 +55,7 @@ public final class PluginHandler implements ShutdownCondition {
         if (this.enabled) {
             this.enabled = false;
             this.pluginManager.getServerManager().getLogger().info("Disabled plugin " + this.name);
-            Thread thread = new Thread(this.plugin::onEnable);
+            Thread thread = new Thread(this.plugin::onDisable);
             thread.setName("servermanager-plugin-ondisable-" + this.name);
             thread.start();
         }
