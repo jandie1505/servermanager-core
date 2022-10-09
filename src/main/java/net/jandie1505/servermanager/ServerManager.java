@@ -68,6 +68,11 @@ public final class ServerManager {
         // Loading plugins
         this.pluginManager.loadPlugins();
 
+        // Enable Plugins
+        if (this.configManager.getConfig().getBoolean("autoEnablePlugins")) {
+            this.pluginManager.enableAll();
+        }
+
         // Run last
         this.eventHandler.fireSMEvent(new StartCompleteEvent(this));
         this.logger.info("STARTUP COMPLETE");
