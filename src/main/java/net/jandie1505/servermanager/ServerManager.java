@@ -74,12 +74,9 @@ public final class ServerManager {
             this.pluginManager.enableAll();
         }
 
+        // Start bot
         if (this.configManager.getConfig().getBoolean("autoStartJDA")) {
-            try {
-                this.botManager.startShardManager();
-            } catch (InvalidTokenException e) {
-                this.logger.error("Cannot start bot: invalid token");
-            }
+            this.botManager.startShardManager();
         }
 
         // Run last
