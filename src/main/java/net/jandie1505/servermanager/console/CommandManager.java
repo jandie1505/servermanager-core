@@ -3,6 +3,7 @@ package net.jandie1505.servermanager.console;
 import net.jandie1505.consolecommandapi.builder.CommandAPICommandBuilder;
 import net.jandie1505.consolecommandapi.builder.CommandAPICommandHandlerBuilder;
 import net.jandie1505.consolecommandapi.builder.CommandAPIOptionBuilder;
+import net.jandie1505.consolecommandapi.command.CommandAPICommand;
 import net.jandie1505.consolecommandapi.command.CommandAPICommandHandler;
 import net.jandie1505.consolecommandapi.enums.CommandAPIOptionType;
 import net.jandie1505.consolecommandapi.executors.CommandAPIPermissionRequest;
@@ -331,6 +332,68 @@ public final class CommandManager {
                                                         .setRequired(true)
                                                         .build()
                                         )
+                                        .setPermissionRequest(CommandAPIPermissionRequest.requirePermissionLevel(1))
+                                        .build()
+                        )
+                        .executesNoPermission(DefaultCommandExecutors.noPermissionExecutor())
+                        .setPermissionRequest(CommandAPIPermissionRequest.requirePermissionLevel(1))
+                        .build()
+        );
+
+        this.commandHandler.addCommand("bot",
+                new CommandAPICommandBuilder()
+                        .executes(result -> ((CommandSender) result.getSender()).respond("COMMAND USAGE:\n" +
+                                "bot status\n" +
+                                "bot start\n" +
+                                "bot stop\n" +
+                                "bot shards\n"))
+                        .withSubcommand("status",
+                                new CommandAPICommandBuilder()
+                                        .executes(result -> {
+                                            String response = "CURRENT BOT STATUS:\n";
+
+                                            if (this.serverManager.getBotManager().isShardManagerRunning()) {
+                                                response = response + "Status: RUNNING\n";
+
+                                                response = response + "Shards:\n";
+                                                response = response + "Running: " + this.serverManager.getBotManager().getShardManager().getShardsRunning() + "\n";
+                                                response = response + "Queued: " + this.serverManager.getBotManager().getShardManager().getShardsQueued() + "\n";
+                                                response = response + "Total: " + this.serverManager.getBotManager().getShardManager().getShardsTotal() + "\n";
+                                            } else {
+                                                response = response + "Status: SHUTDOWN";
+                                            }
+
+                                            ((CommandSender) result.getSender()).respond(response);
+                                        })
+                                        .executesNoPermission(DefaultCommandExecutors.noPermissionExecutor())
+                                        .setPermissionRequest(CommandAPIPermissionRequest.requirePermissionLevel(1))
+                                        .build()
+                        )
+                        .withSubcommand("start",
+                                new CommandAPICommandBuilder()
+                                        .executes(result -> {
+                                            if (!this.serverManager.getBotManager().isShardManagerRunning()) {
+                                                ((CommandSender) result.getSender()).respond("Starting bot...");
+                                                this.serverManager.getBotManager().startShardManager();
+                                            } else {
+                                                ((CommandSender) result.getSender()).respond("Bot is already running");
+                                            }
+                                        })
+                                        .executesNoPermission(DefaultCommandExecutors.noPermissionExecutor())
+                                        .setPermissionRequest(CommandAPIPermissionRequest.requirePermissionLevel(1))
+                                        .build()
+                        )
+                        .withSubcommand("stop",
+                                new CommandAPICommandBuilder()
+                                        .executes(result -> {
+                                            if (!this.serverManager.getBotManager().isShardManagerRunning()) {
+                                                ((CommandSender) result.getSender()).respond("Bot is already stopped");
+                                            } else {
+                                                ((CommandSender) result.getSender()).respond("Stopping bot...");
+                                                this.serverManager.getBotManager().stopShardManager();
+                                            }
+                                        })
+                                        .executesNoPermission(DefaultCommandExecutors.noPermissionExecutor())
                                         .setPermissionRequest(CommandAPIPermissionRequest.requirePermissionLevel(1))
                                         .build()
                         )

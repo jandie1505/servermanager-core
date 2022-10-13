@@ -46,6 +46,7 @@ public final class BotManager implements ShutdownCondition {
                 this.shardManager.addEventListener(new SystemEvents(this));
                 this.shardManager.addEventListener(new RedirectEvents(this));
                 this.shardManager.login();
+                this.getServerManager().getLogger().info("Started bot");
             } catch (InvalidTokenException e) {
                 this.getServerManager().getLogger().error("Cannot start bot: invalid token");
                 this.stopShardManager();
